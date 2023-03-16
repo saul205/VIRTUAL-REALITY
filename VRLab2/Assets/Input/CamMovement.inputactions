@@ -1,0 +1,143 @@
+{
+    "name": "CamMovement",
+    "maps": [
+        {
+            "name": "CamMov",
+            "id": "7b995e29-69fe-4072-9274-89582ad14a84",
+            "actions": [
+                {
+                    "name": "Move",
+                    "type": "Value",
+                    "id": "c825f417-6509-4a3b-af5b-e348745cac39",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "2D Vector",
+                    "id": "52264ae7-34aa-47f6-8e15-663ef0eddda7",
+                    "path": "2DVector",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Move",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "up",
+                    "id": "fb7c66df-6a57-402d-b2cf-ce20755082c5",
+                    "path": "<Keyboard>/w",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Kb&mouse",
+                    "action": "Move",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "down",
+                    "id": "0c1687bc-4082-47c4-b5ac-12982c325076",
+                    "path": "<Keyboard>/s",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Kb&mouse",
+                    "action": "Move",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "left",
+                    "id": "9b5b54ea-502e-46fc-8fef-842dab0cef8a",
+                    "path": "<Keyboard>/a",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Kb&mouse",
+                    "action": "Move",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "right",
+                    "id": "06f54709-841d-4ad8-acf9-3bd832381817",
+                    "path": "<Keyboard>/d",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Kb&mouse",
+                    "action": "Move",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                }
+            ]
+        },
+        {
+            "name": "Player",
+            "id": "9e5e7d50-66d7-42da-a66c-cd45c27b4b9e",
+            "actions": [
+                {
+                    "name": "Open",
+                    "type": "Button",
+                    "id": "a94aed0e-a56c-487c-b7ed-89aa3c77783c",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Spawn",
+                    "type": "Button",
+                    "id": "180d944b-2db2-4896-b9db-96caa8da931f",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "ca90e0f3-4a71-4eab-a036-cd26db9f19a3",
+                    "path": "<Keyboard>/e",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Kb&mouse",
+                    "action": "Open",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "0404fd55-bc4f-4d2c-ba7c-575e4a3ab559",
+                    "path": "<Keyboard>/q",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Kb&mouse",
+                    "action": "Spawn",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": [
+        {
+            "name": "Kb&mouse",
+            "bindingGroup": "Kb&mouse",
+            "devices": [
+                {
+                    "devicePath": "<Keyboard>",
+                    "isOptional": false,
+                    "isOR": false
+                },
+                {
+                    "devicePath": "<Mouse>",
+                    "isOptional": false,
+                    "isOR": false
+                }
+            ]
+        }
+    ]
+}

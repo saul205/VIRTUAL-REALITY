@@ -1,0 +1,74 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class ChargedWeaponController : WeaponController
+{
+    #region Charged Parameters
+
+    public float TimeToFullyCharge = 5f;
+
+    protected float ChargePerSecond = 5;
+    protected bool IsCharging = false;
+
+    #endregion
+    // Start is called before the first frame update
+    void Start()
+    {
+        
+    }
+
+    // Update is called once per frame
+    protected override void Update()
+    {
+        base.Update();
+
+        UpdateCharge();
+    }
+
+    protected void UpdateCharge()
+    {
+        if(IsCharging && Charge < 1f)
+        {
+            Charge += (1f / TimeToFullyCharge) * Time.deltaTime;
+        }
+    }
+
+    public override bool Shoot(bool hold, bool release)
+    {
+        if (hold)
+        {
+            TryChargeWeapon();
+        }
+        else if (release)
+        {
+            return TryRelease();
+        }
+
+        return false;
+    }
+
+    public virtual bool TryChargeWeapon()
+    {
+        if(!IsCharging && ReadyToShoot())
+        {
+            IsCharging = true;
+            return true;
+        }
+
+        return false;
+    }
+
+    public virtual bool TryRelease()
+    {
+        if (!IsCharging)
+            return false;
+
+        HandleShoot();
+
+        IsCharging = false;
+        Charge = 0;
+
+        return true;
+    }
+}
