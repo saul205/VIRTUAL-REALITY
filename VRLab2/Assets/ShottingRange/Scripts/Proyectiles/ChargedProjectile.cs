@@ -5,7 +5,7 @@ using UnityEngine;
 public class ChargedProjectile : Shootable
 {
     public float minSpeed = 10;
-    public float maxSpeed = 100;
+    public float maxSpeed = 50;
 
     public int minDamage = 10;
     public int maxDamage = 50;
@@ -28,6 +28,7 @@ public class ChargedProjectile : Shootable
 
         Speed = Mathf.Lerp(minSpeed, maxSpeed, Charge);
         damage = Mathf.RoundToInt(Mathf.Lerp(minDamage, maxDamage, Charge));
-        velocity = transform.forward * Speed;
+        Rigidbody.velocity = Vector3.zero;
+        Rigidbody.AddForce(transform.forward * Speed, ForceMode.Impulse);
     }
 }

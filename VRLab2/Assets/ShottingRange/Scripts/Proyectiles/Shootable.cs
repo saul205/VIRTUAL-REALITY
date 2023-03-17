@@ -7,18 +7,24 @@ using UnityEngine.UIElements;
 
 public class Shootable : MonoBehaviour, IShootable
 {
+    public enum States
+    {
+        None,
+        Flying,
+        Hit,
+        Fall,
+        Grounded
+    }
+
+    public Shootable prefab;
+
+    public States state = States.None;
+
     public int GeneralLayer;
+    public Rigidbody Rigidbody;
     public GameObject Owner { get; set; }
     public int damage { get; set; } = 33;
-    public float Gravity = 9.82f;
     public float speed = 5;
-    public Vector3 velocity = Vector3.zero;
-    protected bool shot = false;
-
-    public bool fall = false;
-
-    protected Vector3 hitPoint;
-    protected GameObject hitObject;
 
     public float Charge = 0;
     public float Speed { get
@@ -53,41 +59,47 @@ public class Shootable : MonoBehaviour, IShootable
     public virtual void Shoot(WeaponController controller)
     {
         Owner = controller.Owner;
-        velocity = transform.forward * Speed;
+        prefab = controller.bulletPrefab;
+        Rigidbody.AddForce(transform.forward * Speed, ForceMode.Impulse);
         prevPos = transform.position;
         Charge = controller.Charge;
+        Rigidbody.useGravity = true;
         if (correctionDistance >= 0)
         {
             PlayerWeaponManager pwm = this.Owner.GetComponent<PlayerWeaponManager>();
             correction = pwm.cam.transform.position - transform.position;
             correction = Vector3.ProjectOnPlane(correction, pwm.cam.transform.forward);
         }
-        shot = true;
+        state = States.Flying;
     }
 
     // Update is called once per frame
     protected virtual void Update()
     {
-        if (shot || fall) {
-            Fly();
-            if (correction.magnitude > 0.0001)
-            {
-                Vector3 corrToApply = (prevPos - transform.position).magnitude / correctionDistance * correction;
-                corrToApply = Vector3.ClampMagnitude(corrToApply, correction.magnitude);
-                correction -= corrToApply;
-                transform.position += corrToApply;
-            }
-            HitScan();
-            prevPos = transform.position;
+        switch (state)
+        {
+            case States.Flying:
+                Fly();
+                if (correction.magnitude > 0.0001)
+                {
+                    Vector3 corrToApply = (prevPos - transform.position).magnitude / correctionDistance * correction;
+                    corrToApply = Vector3.ClampMagnitude(corrToApply, correction.magnitude);
+                    correction -= corrToApply;
+                    transform.position += corrToApply;
+                }
+                HitScan();
+                prevPos = transform.position;
+                break;
+            case States.Hit:
+                HitEffects();
+                break;
+            default:
+                break;
         }
     }
 
     public virtual void Fly()
     {
-        transform.position += velocity * Time.deltaTime;
-        travelDistance += Speed * Time.deltaTime;
-        velocity += Vector3.down * Gravity * Time.deltaTime;
-        transform.forward = velocity.normalized;
         if(travelDistance > maxDistance)
         {
             Destroy(gameObject);
@@ -103,20 +115,28 @@ public class Shootable : MonoBehaviour, IShootable
         if(Physics.SphereCast(prevPos, Radius, displacement.normalized, out closestHit, displacement.magnitude, hitMask))
         {
 
-            hitPoint = closestHit.point;
-            hitObject = closestHit.collider.gameObject;
+            
             Hit(closestHit);
         }
     }
 
-    public void Hit(RaycastHit hit)
+    public virtual void Hit(RaycastHit hit)
     {
         IDamageable damageable = hit.collider.GetComponent<IDamageable>();
         if(damageable != null) {
             damageable.Hit(this.damage);
         }
+        state = States.Hit;
 
-        HitEffects(); 
+        ApplyForce(hit);
+    }
+
+    public virtual void ApplyForce(RaycastHit hit)
+    {
+        if(hit.rigidbody != null)
+        {
+            hit.rigidbody.AddForceAtPosition(Rigidbody.velocity, hit.point, ForceMode.Impulse);
+        }
     }
 
     public virtual void HitEffects()

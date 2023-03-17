@@ -132,3 +132,6 @@ MonoBehaviour:
   bulletSpawn: {fileID: 271160261797897748}
   Charge: 0
   rof: 120
+  MaxAmmo: 10
+  StartingAmmo: 10
+  AmmoManager: {fileID: 0}

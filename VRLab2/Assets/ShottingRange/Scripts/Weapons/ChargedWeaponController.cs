@@ -13,10 +13,6 @@ public class ChargedWeaponController : WeaponController
 
     #endregion
     // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
 
     // Update is called once per frame
     protected override void Update()
@@ -50,7 +46,7 @@ public class ChargedWeaponController : WeaponController
 
     public virtual bool TryChargeWeapon()
     {
-        if(!IsCharging && ReadyToShoot())
+        if(!IsCharging && ReadyToShoot() && AmmoCount > 0)
         {
             IsCharging = true;
             return true;
@@ -65,6 +61,7 @@ public class ChargedWeaponController : WeaponController
             return false;
 
         HandleShoot();
+        ReduceAmmo();
 
         IsCharging = false;
         Charge = 0;

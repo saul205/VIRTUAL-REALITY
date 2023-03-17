@@ -45,6 +45,15 @@ public class PlayerController: Damageable
 
         if(Time.time >= LastJump + JumpingLandPrevention)
         {
+            RaycastHit hit;
+            if(Physics.SphereCast(groundCheck.position, .5f, Vector3.down, out hit, .1f, GroundLayers))
+            {
+                if(Vector3.Angle(hit.normal, Vector3.up) < 15)
+                {
+                    IsGrounded = true;
+                }
+            }
+            /*
             var Colliders = Physics.OverlapSphere(groundCheck.position, .1f, GroundLayers);
             foreach(var collider in Colliders)
             {
@@ -52,7 +61,7 @@ public class PlayerController: Damageable
                 {
                     IsGrounded = true;
                 }
-            }
+            }*/
         }
     }
 
@@ -98,10 +107,17 @@ public class PlayerController: Damageable
         
     }
 
+    public void OnControllerColliderHit(ControllerColliderHit hit)
+    {
+        if(hit.rigidbody != null)
+            //hit.rigidbody.AddForce(hit.moveDirection.normalized * 5, ForceMode.Force);
+            hit.rigidbody.AddForceAtPosition(hit.moveDirection.normalized * 5, hit.point, ForceMode.Force);
+    }
+
     void OnDrawGizmosSelected()
     {
         // Draw a yellow sphere at the transform's position
         Gizmos.color = Color.yellow;
-        Gizmos.DrawSphere(groundCheck.position, .2f);
+        Gizmos.DrawSphere(groundCheck.position, .5f);
     }
 }

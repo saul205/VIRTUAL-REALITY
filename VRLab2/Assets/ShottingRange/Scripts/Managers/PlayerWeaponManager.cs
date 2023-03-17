@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -16,6 +17,11 @@ public class PlayerWeaponManager : MonoBehaviour
     public int weaponSlots = 2;
 
     public int ActiveWeaponIndex = -1;
+    public TextMeshProUGUI ammoCouter;
+    public TextMeshProUGUI allAmmoCounter;
+    public AmmoManager AmmoManager;
+
+    public bool AutoReload = true;
     void Start()
     {
         weapons = new WeaponController[5];
@@ -31,7 +37,16 @@ public class PlayerWeaponManager : MonoBehaviour
         if(ActiveWeaponIndex >= 0)
         {
             weapons[ActiveWeaponIndex].Shoot(hold, release);
+            UpdateAmmoCount();
         }
+    }
+
+    public void UpdateAmmoCount()
+    {
+        var wep = weapons[ActiveWeaponIndex];
+        ammoCouter.text = wep.GetAmmoCount() + " / " + wep.MaxAmmo;
+
+        allAmmoCounter.text = AmmoManager.GetAllAmmoText();
     }
 
     public void AddWeapon(WeaponController weapon)
@@ -70,6 +85,11 @@ public class PlayerWeaponManager : MonoBehaviour
         }
     }
 
+    private void OnReload()
+    {
+        weapons[ActiveWeaponIndex].SetReload();
+    }
+
     private void SwitchWeapon(bool next)
     {
         var prevIndex = ActiveWeaponIndex;
@@ -79,16 +99,17 @@ public class PlayerWeaponManager : MonoBehaviour
         }
         else
         {
-            for(int i = 0; i < weaponSlots - 1; i++)
+            for(int i = 0; i < weaponSlots - 2; i++)
             {
                 var index = (ActiveWeaponIndex + (next ? 1 : -1) * (i+1)) % weaponSlots;
                 if(index < 0)
                 {
                     index = weaponSlots + index;
                 }
-                if (weapons[index])
+                if (index != ActiveWeaponIndex && weapons[index])
                 {
                     ActiveWeaponIndex = index;
+                    break;
                 }
             }
         }
