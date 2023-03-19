@@ -131,7 +131,12 @@ MonoBehaviour:
   bulletPrefab: {fileID: 2783672852279875024, guid: 1b66effff690f3e438cff2e3b2ad7ddc, type: 3}
   bulletSpawn: {fileID: 271160261797897748}
   Charge: 0
-  rof: 120
+  rof: 80
   MaxAmmo: 10
   StartingAmmo: 10
-  AmmoManager: {fileID: 0}
+  recoilValue: 45
+  recoilSpeed: 50
+  recoverySpeed: 5
+  RecoilMult: 1
+  MinRecoilMult: 1
+  MaxRecoilMult: 1

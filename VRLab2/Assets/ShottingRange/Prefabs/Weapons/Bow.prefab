@@ -83,6 +83,9 @@ MonoBehaviour:
   rof: 120
   MaxAmmo: 10
   StartingAmmo: 5
+  recoilValue: 0
+  recoilSpeed: 0
+  recoverySpeed: 0
   TimeToFullyCharge: 1
   MaxPullback: 0.4
 --- !u!1001 &6703971295101994908

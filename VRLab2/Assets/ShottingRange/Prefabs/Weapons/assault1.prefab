@@ -131,6 +131,9 @@ MonoBehaviour:
   rof: 500
   MaxAmmo: 50
   StartingAmmo: 30
+  recoilValue: 2
+  recoilSpeed: 20
+  recoverySpeed: 5
 --- !u!4 &3389411182377519695 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 33269b2b610f4c245a712795c1927939, type: 3}

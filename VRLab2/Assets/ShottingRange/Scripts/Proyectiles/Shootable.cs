@@ -23,6 +23,8 @@ public class Shootable : MonoBehaviour, IShootable
     public int GeneralLayer;
     public Rigidbody Rigidbody;
     public GameObject Owner { get; set; }
+
+    public GameObject impactImage;
     public int damage { get; set; } = 33;
     public float speed = 5;
 
@@ -50,7 +52,6 @@ public class Shootable : MonoBehaviour, IShootable
         }
     }
 
-    private float travelDistance = 0f;
     public float correctionDistance = 5f;
     private Vector3 correction;
     private Vector3 prevPos;
@@ -67,8 +68,8 @@ public class Shootable : MonoBehaviour, IShootable
         if (correctionDistance >= 0)
         {
             PlayerWeaponManager pwm = this.Owner.GetComponent<PlayerWeaponManager>();
-            correction = pwm.cam.transform.position - transform.position;
-            correction = Vector3.ProjectOnPlane(correction, pwm.cam.transform.forward);
+            correction = pwm.aimSpot.transform.position - transform.position;
+            correction = Vector3.ProjectOnPlane(correction, pwm.aimSpot.transform.forward);
         }
         state = States.Flying;
     }
@@ -100,7 +101,7 @@ public class Shootable : MonoBehaviour, IShootable
 
     public virtual void Fly()
     {
-        if(travelDistance > maxDistance)
+        if(gameObject.transform.localPosition.z > maxDistance)
         {
             Destroy(gameObject);
         }
@@ -114,8 +115,6 @@ public class Shootable : MonoBehaviour, IShootable
         Vector3 displacement = transform.position - prevPos;
         if(Physics.SphereCast(prevPos, Radius, displacement.normalized, out closestHit, displacement.magnitude, hitMask))
         {
-
-            
             Hit(closestHit);
         }
     }
@@ -123,8 +122,12 @@ public class Shootable : MonoBehaviour, IShootable
     public virtual void Hit(RaycastHit hit)
     {
         IDamageable damageable = hit.collider.GetComponent<IDamageable>();
-        if(damageable != null) {
+        if (damageable != null) {
             damageable.Hit(this.damage);
+        }
+        if (impactImage != null) { 
+            var hitImage = Instantiate(impactImage, hit.point + hit.normal * .001f, Quaternion.LookRotation(hit.normal), hit.collider.transform);
+            hitImage.transform.localScale = hitImage.transform.worldToLocalMatrix * Vector3.one;
         }
         state = States.Hit;
 

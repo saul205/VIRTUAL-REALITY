@@ -50,4 +50,15 @@ public class BowController : ChargedWeaponController
 
         return result;
     }
+    public override void OnCancelCharge()
+    {
+        base.OnCancelCharge();
+
+        if (bullet != null)
+        {
+            Destroy(bullet.gameObject);
+            bullet = null;
+            PrevCharge = 0;
+        }
+    }
 }

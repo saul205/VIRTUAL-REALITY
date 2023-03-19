@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerController: Damageable
+public class PlayerController : Damageable
 {
     public float movSpeed = 5f;
     public float Gravity = 9.82f;
@@ -43,12 +43,12 @@ public class PlayerController: Damageable
     {
         IsGrounded = false;
 
-        if(Time.time >= LastJump + JumpingLandPrevention)
+        if (Time.time >= LastJump + JumpingLandPrevention)
         {
             RaycastHit hit;
-            if(Physics.SphereCast(groundCheck.position, .5f, Vector3.down, out hit, .1f, GroundLayers))
+            if (Physics.SphereCast(groundCheck.position, .5f, Vector3.down, out hit, .1f, GroundLayers))
             {
-                if(Vector3.Angle(hit.normal, Vector3.up) < 15)
+                if (Vector3.Angle(hit.normal, Vector3.up) < 15)
                 {
                     IsGrounded = true;
                 }
@@ -67,7 +67,7 @@ public class PlayerController: Damageable
 
     public void CheckAlive()
     {
-        if(Hp <= 0)
+        if (Hp <= 0)
         {
             Die();
         }
@@ -104,20 +104,13 @@ public class PlayerController: Damageable
 
     public void ResetInput()
     {
-        
+
     }
 
     public void OnControllerColliderHit(ControllerColliderHit hit)
     {
-        if(hit.rigidbody != null)
+        if (hit.rigidbody != null)
             //hit.rigidbody.AddForce(hit.moveDirection.normalized * 5, ForceMode.Force);
             hit.rigidbody.AddForceAtPosition(hit.moveDirection.normalized * 5, hit.point, ForceMode.Force);
-    }
-
-    void OnDrawGizmosSelected()
-    {
-        // Draw a yellow sphere at the transform's position
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawSphere(groundCheck.position, .5f);
     }
 }

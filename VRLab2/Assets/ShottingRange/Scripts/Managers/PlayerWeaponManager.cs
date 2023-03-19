@@ -11,9 +11,12 @@ public class PlayerWeaponManager : MonoBehaviour
     public WeaponController[] weapons;
     public Camera cam;
     public Transform weaponSpawn;
+    public Transform aimSpot;
 
     private bool hold = false;
     private bool release = false;
+    private bool cancel = false;
+    private bool press = false;
     public int weaponSlots = 2;
 
     public int ActiveWeaponIndex = -1;
@@ -36,11 +39,17 @@ public class PlayerWeaponManager : MonoBehaviour
     {
         if(ActiveWeaponIndex >= 0)
         {
-            weapons[ActiveWeaponIndex].Shoot(hold, release);
+            weapons[ActiveWeaponIndex].Shoot(press, hold, release, cancel);
             UpdateAmmoCount();
         }
     }
 
+    private void LateUpdate()
+    {
+        cancel = false;
+        release = false;
+        press = false;
+    }
     public void UpdateAmmoCount()
     {
         var wep = weapons[ActiveWeaponIndex];
@@ -72,8 +81,20 @@ public class PlayerWeaponManager : MonoBehaviour
 
     private void OnShoot()
     {
-        release = hold;
+        if(!hold)
+        {
+            press = true;
+        }
+        else
+        {
+            release = true;
+        }
         hold = !hold;
+    }
+
+    private void OnCancelCharge()
+    {
+        cancel = true;
     }
 
     private void OnSwitchWeapon(InputValue value)
