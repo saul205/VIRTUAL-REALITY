@@ -10,6 +10,9 @@ public class PlayerController : Damageable
     public Transform groundCheck;
     public LayerMask GroundLayers;
 
+    public float iTime = 1;
+    public float current_iTime = 0;
+    public override bool CanTakeDmg => current_iTime == 0;
 
     private Vector3 Velocity = Vector3.zero;
     private bool jump = false;
@@ -99,12 +102,20 @@ public class PlayerController : Damageable
 
         gameObject.GetComponent<CharacterController>().Move(Velocity * Time.deltaTime);
 
+        current_iTime = Mathf.Max(current_iTime - Time.deltaTime, 0);
+
         ResetInput();
     }
 
     public void ResetInput()
     {
 
+    }
+
+    public override void AfterHit()
+    {
+        base.AfterHit();
+        current_iTime = iTime;
     }
 
     public void OnControllerColliderHit(ControllerColliderHit hit)

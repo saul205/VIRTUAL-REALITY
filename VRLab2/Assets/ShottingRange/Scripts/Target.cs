@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Target : MonoBehaviour, IDamageable
 {
+    public GameObject target;
     public int hp = 100;
     public int Hp { get
         {
@@ -40,9 +41,7 @@ public class Target : MonoBehaviour, IDamageable
     public float speed = 5;
     void Update()
     {
-        int x_axis = Random.Range(-1, 2);
-        int y_axis = Random.Range(-1, 2);
-
-        transform.position = transform.position + new Vector3(x_axis, 0, y_axis) * speed * Time.deltaTime;
+        transform.LookAt(target.transform.position);
+        transform.position = Vector3.MoveTowards(transform.position, target.transform.position, speed * Time.deltaTime);
     }
 }

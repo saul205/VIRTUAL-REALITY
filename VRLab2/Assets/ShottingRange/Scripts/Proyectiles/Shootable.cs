@@ -29,6 +29,7 @@ public class Shootable : MonoBehaviour, IShootable
     public float speed = 5;
 
     public float Charge = 0;
+    public Transform tail;
     public float Speed { get
         {
             return speed;
