@@ -815,8 +815,8 @@ MonoBehaviour:
   enemies: []
   targetsPrefabs:
   - {fileID: 4611197737563743484, guid: 155602e1db823e94b8e1a3a48efb8187, type: 3}
-  startingEnemies: 0
-  spawnRate: 0
+  startingEnemies: 2
+  spawnRate: 2
   lastSpawnTime: 0
 --- !u!4 &754488695
 Transform:
