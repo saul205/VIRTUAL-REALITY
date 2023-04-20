@@ -12,7 +12,6 @@ public class PlayerWeaponManager : MonoBehaviour
     public Camera cam;
     public Transform weaponSpawn;
     public Transform aimSpot;
-
     public int weaponSlots = 2;
 
     public int ActiveWeaponIndex = -1;
@@ -21,7 +20,6 @@ public class PlayerWeaponManager : MonoBehaviour
     public AmmoManager AmmoManager;
 
     public InputManager InputManager;
-
     public bool AutoReload = true;
     void Start()
     {
@@ -35,6 +33,7 @@ public class PlayerWeaponManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
         bool next = true;
         if(ActiveWeaponIndex >= 0)
         {

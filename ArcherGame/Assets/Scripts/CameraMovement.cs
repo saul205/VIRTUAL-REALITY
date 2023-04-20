@@ -21,9 +21,10 @@ public class CameraMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //float movX = Mouse.current.delta.x.ReadValue() * camSens * Time.deltaTime;
-        //float movY = Mouse.current.delta.y.ReadValue() * camSens * Time.deltaTime;
-        //transform.localEulerAngles = new Vector3(transform.localEulerAngles.x - movY, 0, 0);
-        //player.Rotate(Vector3.up * movX);
+        float movX = Mouse.current.delta.x.ReadValue() * camSens * Time.deltaTime;
+        float movY = Mouse.current.delta.y.ReadValue() * camSens * Time.deltaTime;
+
+        transform.localEulerAngles = new Vector3(transform.localEulerAngles.x - movY, 0, 0);
+        player.Rotate(Vector3.up * movX);
     }
 }

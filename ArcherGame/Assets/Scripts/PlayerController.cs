@@ -20,7 +20,6 @@ public class PlayerController : Damageable
 
     private float LastJump = 0f;
     private float JumpingLandPrevention = .2f;
-
     public InputManager InputManager;
     // Start is called before the first frame update
     void Awake()

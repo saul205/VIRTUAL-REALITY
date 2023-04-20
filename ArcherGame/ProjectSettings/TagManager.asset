@@ -3,10 +3,7 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags:
-  - Wall
-  - Target
-  - Map
+  tags: []
   layers:
   - Default
   - TransparentFX
@@ -14,10 +11,10 @@ TagManager:
   - 
   - Water
   - UI
-  - Hittable
-  - Map
-  - Projectile
-  - Weapon
+  - 
+  - 
+  - 
+  - 
   - 
   - 
   - 
@@ -41,9 +38,6 @@ TagManager:
   - 
   - 
   m_SortingLayers:
-  - name: UI VR
-    uniqueID: 3711608075
-    locked: 0
   - name: Default
     uniqueID: 0
     locked: 0
