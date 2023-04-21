@@ -21,7 +21,8 @@ public class WeaponController : MonoBehaviour
     protected int AmmoCount;
     protected bool reload = false;
     protected bool reloading = false;
-    protected float reloadTime = 3;
+    protected float reloadTime = 3.5f;
+    protected float reloadStart = 0;
 
     public float recoilValue = 0;
     public float recoilSpeed = 0f;
@@ -56,7 +57,7 @@ public class WeaponController : MonoBehaviour
 
             if (reloading)
             {
-                if(Time.time >= lastShot + reloadTime)
+                if(Time.time >= reloadStart + reloadTime)
                 {
                     Reload(wepManager);
                 }
@@ -148,6 +149,7 @@ public class WeaponController : MonoBehaviour
         {
             reloading = true;
             this.gameObject.GetComponent<Animator>().SetTrigger("reload");
+            reloadStart = Time.time;
         }
         else
         {
