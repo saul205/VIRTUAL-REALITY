@@ -62,6 +62,24 @@ public partial class @PlayerControl: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Reload"",
+                    ""type"": ""Button"",
+                    ""id"": ""b6a03891-b6a6-43f2-bf4e-19d5b0067e2a"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""CancelCharge"",
+                    ""type"": ""Button"",
+                    ""id"": ""7e25e246-3170-426c-9c67-cca02355b526"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -207,6 +225,28 @@ public partial class @PlayerControl: IInputActionCollection2, IDisposable
                     ""action"": ""Jump"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c84ad88f-51cb-4fc0-945d-f744f74f4fde"",
+                    ""path"": ""<Keyboard>/r"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Reload"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""87b3221e-37dc-42ca-a460-d69d24ac7e94"",
+                    ""path"": ""<Mouse>/rightButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""CancelCharge"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -236,6 +276,8 @@ public partial class @PlayerControl: IInputActionCollection2, IDisposable
         m_PlayerMovement_Shoot = m_PlayerMovement.FindAction("Shoot", throwIfNotFound: true);
         m_PlayerMovement_SwitchWeapon = m_PlayerMovement.FindAction("SwitchWeapon", throwIfNotFound: true);
         m_PlayerMovement_Jump = m_PlayerMovement.FindAction("Jump", throwIfNotFound: true);
+        m_PlayerMovement_Reload = m_PlayerMovement.FindAction("Reload", throwIfNotFound: true);
+        m_PlayerMovement_CancelCharge = m_PlayerMovement.FindAction("CancelCharge", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -301,6 +343,8 @@ public partial class @PlayerControl: IInputActionCollection2, IDisposable
     private readonly InputAction m_PlayerMovement_Shoot;
     private readonly InputAction m_PlayerMovement_SwitchWeapon;
     private readonly InputAction m_PlayerMovement_Jump;
+    private readonly InputAction m_PlayerMovement_Reload;
+    private readonly InputAction m_PlayerMovement_CancelCharge;
     public struct PlayerMovementActions
     {
         private @PlayerControl m_Wrapper;
@@ -309,6 +353,8 @@ public partial class @PlayerControl: IInputActionCollection2, IDisposable
         public InputAction @Shoot => m_Wrapper.m_PlayerMovement_Shoot;
         public InputAction @SwitchWeapon => m_Wrapper.m_PlayerMovement_SwitchWeapon;
         public InputAction @Jump => m_Wrapper.m_PlayerMovement_Jump;
+        public InputAction @Reload => m_Wrapper.m_PlayerMovement_Reload;
+        public InputAction @CancelCharge => m_Wrapper.m_PlayerMovement_CancelCharge;
         public InputActionMap Get() { return m_Wrapper.m_PlayerMovement; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -330,6 +376,12 @@ public partial class @PlayerControl: IInputActionCollection2, IDisposable
             @Jump.started += instance.OnJump;
             @Jump.performed += instance.OnJump;
             @Jump.canceled += instance.OnJump;
+            @Reload.started += instance.OnReload;
+            @Reload.performed += instance.OnReload;
+            @Reload.canceled += instance.OnReload;
+            @CancelCharge.started += instance.OnCancelCharge;
+            @CancelCharge.performed += instance.OnCancelCharge;
+            @CancelCharge.canceled += instance.OnCancelCharge;
         }
 
         private void UnregisterCallbacks(IPlayerMovementActions instance)
@@ -346,6 +398,12 @@ public partial class @PlayerControl: IInputActionCollection2, IDisposable
             @Jump.started -= instance.OnJump;
             @Jump.performed -= instance.OnJump;
             @Jump.canceled -= instance.OnJump;
+            @Reload.started -= instance.OnReload;
+            @Reload.performed -= instance.OnReload;
+            @Reload.canceled -= instance.OnReload;
+            @CancelCharge.started -= instance.OnCancelCharge;
+            @CancelCharge.performed -= instance.OnCancelCharge;
+            @CancelCharge.canceled -= instance.OnCancelCharge;
         }
 
         public void RemoveCallbacks(IPlayerMovementActions instance)
@@ -378,5 +436,7 @@ public partial class @PlayerControl: IInputActionCollection2, IDisposable
         void OnShoot(InputAction.CallbackContext context);
         void OnSwitchWeapon(InputAction.CallbackContext context);
         void OnJump(InputAction.CallbackContext context);
+        void OnReload(InputAction.CallbackContext context);
+        void OnCancelCharge(InputAction.CallbackContext context);
     }
 }

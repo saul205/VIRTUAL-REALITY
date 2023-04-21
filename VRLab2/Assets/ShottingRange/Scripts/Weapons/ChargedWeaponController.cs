@@ -11,12 +11,10 @@ public class ChargedWeaponController : WeaponController
     protected float ChargePerSecond = 5;
     protected bool IsCharging = false;
 
+    protected bool canceled = false;
+
     #endregion
     // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
 
     // Update is called once per frame
     protected override void Update()
@@ -34,9 +32,18 @@ public class ChargedWeaponController : WeaponController
         }
     }
 
-    public override bool Shoot(bool hold, bool release)
+    public override bool Shoot(bool press, bool hold, bool release, bool cancel)
     {
-        if (hold)
+        if (press)
+        {
+            canceled = false;
+        }
+
+        if (cancel)
+        {
+            OnCancelCharge();
+        }
+        else if (hold && !canceled)
         {
             TryChargeWeapon();
         }
@@ -50,7 +57,7 @@ public class ChargedWeaponController : WeaponController
 
     public virtual bool TryChargeWeapon()
     {
-        if(!IsCharging && ReadyToShoot())
+        if(!IsCharging && ReadyToShoot() && AmmoCount > 0)
         {
             IsCharging = true;
             return true;
@@ -65,10 +72,18 @@ public class ChargedWeaponController : WeaponController
             return false;
 
         HandleShoot();
+        ReduceAmmo();
 
         IsCharging = false;
         Charge = 0;
 
         return true;
+    }
+
+    public virtual void OnCancelCharge()
+    {
+        IsCharging = false;
+        Charge = 0;
+        canceled = true;
     }
 }

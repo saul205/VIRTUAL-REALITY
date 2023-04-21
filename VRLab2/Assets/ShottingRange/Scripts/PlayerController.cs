@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerController: Damageable
+public class PlayerController : Damageable
 {
     public float movSpeed = 5f;
     public float Gravity = 9.82f;
@@ -10,6 +10,9 @@ public class PlayerController: Damageable
     public Transform groundCheck;
     public LayerMask GroundLayers;
 
+    public float iTime = 1;
+    public float current_iTime = 0;
+    public override bool CanTakeDmg => current_iTime == 0;
 
     private Vector3 Velocity = Vector3.zero;
     private bool jump = false;
@@ -43,8 +46,17 @@ public class PlayerController: Damageable
     {
         IsGrounded = false;
 
-        if(Time.time >= LastJump + JumpingLandPrevention)
+        if (Time.time >= LastJump + JumpingLandPrevention)
         {
+            RaycastHit hit;
+            if (Physics.SphereCast(groundCheck.position, .5f, Vector3.down, out hit, .1f, GroundLayers))
+            {
+                if (Vector3.Angle(hit.normal, Vector3.up) < 15)
+                {
+                    IsGrounded = true;
+                }
+            }
+            /*
             var Colliders = Physics.OverlapSphere(groundCheck.position, .1f, GroundLayers);
             foreach(var collider in Colliders)
             {
@@ -52,13 +64,13 @@ public class PlayerController: Damageable
                 {
                     IsGrounded = true;
                 }
-            }
+            }*/
         }
     }
 
     public void CheckAlive()
     {
-        if(Hp <= 0)
+        if (Hp <= 0)
         {
             Die();
         }
@@ -90,18 +102,26 @@ public class PlayerController: Damageable
 
         gameObject.GetComponent<CharacterController>().Move(Velocity * Time.deltaTime);
 
+        current_iTime = Mathf.Max(current_iTime - Time.deltaTime, 0);
+
         ResetInput();
     }
 
     public void ResetInput()
     {
-        
+
     }
 
-    void OnDrawGizmosSelected()
+    public override void AfterHit()
     {
-        // Draw a yellow sphere at the transform's position
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawSphere(groundCheck.position, .2f);
+        base.AfterHit();
+        current_iTime = iTime;
+    }
+
+    public void OnControllerColliderHit(ControllerColliderHit hit)
+    {
+        if (hit.rigidbody != null)
+            //hit.rigidbody.AddForce(hit.moveDirection.normalized * 5, ForceMode.Force);
+            hit.rigidbody.AddForceAtPosition(hit.moveDirection.normalized * 5, hit.point, ForceMode.Force);
     }
 }

@@ -3,44 +3,56 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class Arrow : ChargedProjectile
+public class Arrow : ChargedProjectile, IPickup
 {
-    // Start is called before the first frame update
-    public Rigidbody body;
-    public bool hit = false;
+    #region Pickup
+    public bool CanPickup { get; set; } = false;
+    public int value { get; set; } = 1;
+    #endregion
     protected override void Update()
     {
         base.Update();
 
-        if(shot && body.velocity != Vector3.zero)
-            transform.forward = body.velocity.normalized;
-
-        if(hit && transform.parent == null)
+        switch (state)
         {
-            fall = true;
-            hit = false;
-            body.useGravity = true;
+            case States.Flying:
+                if(Rigidbody.velocity != Vector3.zero)
+                    transform.forward = Rigidbody.velocity.normalized;
+                break;
+            case States.Hit:
+                if(transform.parent == null)
+                {
+                    state = States.Fall;
+                    Rigidbody.isKinematic = false;
+                    gameObject.GetComponentInChildren<MeshCollider>().isTrigger = false;
+                    Rigidbody.useGravity = true;
+                }
+                break;
+            case States.Fall:
+                break;
+            case States.Grounded:
+                break;
+            default:
+                break;
         }
     }
 
-    public override void Shoot(WeaponController controller)
-    {
-        base.Shoot(controller);
-
-        body.useGravity = true;
-        body.AddForce(transform.forward * Charge * Speed, ForceMode.Impulse);
-    }
     public override void HitEffects()
     {
-        shot = false;
-        hit = true;
-        body.velocity = Vector3.zero;
-        body.useGravity = false;
-        transform.position = hitPoint;
-        gameObject.transform.SetParent(hitObject.transform, true);
+        return;
     }
-    public override void Fly()
+
+    public override void Hit(RaycastHit hit)
     {
-       
+        gameObject.transform.SetParent(hit.collider.gameObject.transform);
+        
+        base.Hit(hit);
+
+        Rigidbody.isKinematic = true;
+        Rigidbody.velocity = Vector3.zero;
+        Rigidbody.useGravity = false;
+        transform.position = hit.point;
+
+        CanPickup = true;
     }
 }
