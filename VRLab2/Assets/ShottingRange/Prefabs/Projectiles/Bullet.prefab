@@ -52,8 +52,9 @@ MonoBehaviour:
   GeneralLayer: 10
   Rigidbody: {fileID: 6766424210889912625}
   impactImage: {fileID: 2141373306111429256, guid: b530cb7ef4d220f448daa04d89eceacf, type: 3}
-  speed: 300
+  speed: 1000
   Charge: 0
+  tail: {fileID: 0}
   maxDistance: 100
   correctionDistance: 0.1
   Radius: 0.05
@@ -127,7 +128,7 @@ TrailRenderer:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 0.051723927
+        value: 0.094463795
         inSlope: 0
         outSlope: 0
         tangentMode: 0
@@ -148,8 +149,8 @@ TrailRenderer:
       m_RotationOrder: 4
     colorGradient:
       serializedVersion: 2
-      key0: {r: 0.6886792, g: 0.528255, b: 0.069301, a: 1}
-      key1: {r: 0.6886792, g: 0.528255, b: 0.069301, a: 1}
+      key0: {r: 0.9647059, g: 0.4823913, b: 0, a: 1}
+      key1: {r: 0.9647059, g: 0.4823913, b: 0, a: 1}
       key2: {r: 1, g: 1, b: 1, a: 0}
       key3: {r: 0, g: 0, b: 0, a: 0}
       key4: {r: 0, g: 0, b: 0, a: 0}

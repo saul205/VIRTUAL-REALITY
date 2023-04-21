@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.UIElements;
 
 public class WeaponController : MonoBehaviour
 {
@@ -19,6 +20,8 @@ public class WeaponController : MonoBehaviour
 
     protected int AmmoCount;
     protected bool reload = false;
+    protected bool reloading = false;
+    protected float reloadTime = 3;
 
     public float recoilValue = 0;
     public float recoilSpeed = 0f;
@@ -31,7 +34,7 @@ public class WeaponController : MonoBehaviour
     private Vector3 targetRotation = Vector3.zero;
     private Vector3 currentRotation = Vector3.zero;
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         AmmoCount = StartingAmmo;
     }
@@ -46,21 +49,32 @@ public class WeaponController : MonoBehaviour
             currentRotation = Vector3.Slerp(currentRotation, targetRotation, recoilSpeed * Time.deltaTime);
             wepManager.aimSpot.localEulerAngles = currentRotation;
 
-            if (ReadyToShoot())
+            if (RoF())
             {
                 RecoilMult = MinRecoilMult; // Mathf.Max(RecoilMult - 0.2f, 0);
             }
 
-            if (AmmoCount == 0 && wepManager.AutoReload)
+            if (reloading)
             {
-                Reload(wepManager);
+                if(Time.time >= lastShot + reloadTime)
+                {
+                    Reload(wepManager);
+                }
             }
-            else if(reload)
+            else
             {
-                Reload(wepManager);
+                if (AmmoCount == 0 && wepManager.AutoReload)
+                    {
+                        StartReload();
+                    }
+                    else if(reload)
+                    {
+                        StartReload();
+                    }
+                }
             }
-        }
     }
+
     public void Recoil()
     {
         targetRotation = currentRotation + Vector3.left * Mathf.Pow(recoilValue, RecoilMult);
@@ -76,9 +90,14 @@ public class WeaponController : MonoBehaviour
         Recoil();
     }
 
-    protected bool ReadyToShoot()
+    protected bool RoF()
     {
         return Time.time > lastShot + 60 / rof;
+    }
+
+    protected bool ReadyToShoot()
+    {
+        return RoF() && !reloading;
     }
 
     public bool TryShoot()
@@ -123,6 +142,20 @@ public class WeaponController : MonoBehaviour
         reload = true;
     }
 
+    protected virtual void StartReload()
+    {
+        if(AmmoCount < MaxAmmo)
+        {
+            reloading = true;
+            this.gameObject.GetComponent<Animator>().SetTrigger("reload");
+        }
+        else
+        {
+            reload = false;
+        }
+            
+    }
+
     public void Reload(PlayerWeaponManager wepManager)
     {
         var reloadAmount = wepManager.AmmoManager.TakeAmmo(bulletPrefab, MaxAmmo - AmmoCount);
@@ -131,6 +164,7 @@ public class WeaponController : MonoBehaviour
             AmmoCount += reloadAmount;
         }
 
+        reloading = false;
         reload = false;
     }
 }

@@ -86,4 +86,10 @@ public class ChargedWeaponController : WeaponController
         Charge = 0;
         canceled = true;
     }
+
+    protected override void StartReload()
+    {
+        if(!IsCharging)
+            base.StartReload();
+    }
 }
