@@ -13,11 +13,6 @@ public class PlayerWeaponManager : MonoBehaviour
     public Transform weaponSpawn;
     public Transform camHolder;
     public Transform aimSpot;
-
-    private bool hold = false;
-    private bool release = false;
-    private bool cancel = false;
-    private bool press = false;
     public int weaponSlots = 2;
 
     public int ActiveWeaponIndex = -1;
@@ -25,6 +20,7 @@ public class PlayerWeaponManager : MonoBehaviour
     public TextMeshProUGUI allAmmoCounter;
     public AmmoManager AmmoManager;
 
+    public InputManager InputManager;
     public bool AutoReload = true;
     void Start()
     {
@@ -38,19 +34,28 @@ public class PlayerWeaponManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
+        bool next = true;
         if(ActiveWeaponIndex >= 0)
         {
-            weapons[ActiveWeaponIndex].Shoot(press, hold, release, cancel);
-            UpdateAmmoCount();
+            if (InputManager.GetReloadInput())
+            {
+                weapons[ActiveWeaponIndex].SetReload();
+            }
+            else if (InputManager.GetSwitchInput(ref next))
+            {
+                SwitchWeapon(next);
+            }
+            else
+            {
+                bool press = false, hold = false, release = false, cancel = false;
+                InputManager.GetShootInput(ref press, ref hold, ref release, ref cancel);
+                weapons[ActiveWeaponIndex].Shoot(press, hold, release, cancel);
+                UpdateAmmoCount();
+            }
         }
     }
 
-    private void LateUpdate()
-    {
-        cancel = false;
-        release = false;
-        press = false;
-    }
     public void UpdateAmmoCount()
     {
         var wep = weapons[ActiveWeaponIndex];
@@ -78,38 +83,6 @@ public class PlayerWeaponManager : MonoBehaviour
                 }
             }
         }
-    }
-
-    private void OnShoot()
-    {
-        if(!hold)
-        {
-            press = true;
-        }
-        else
-        {
-            release = true;
-        }
-        hold = !hold;
-    }
-
-    private void OnCancelCharge()
-    {
-        cancel = true;
-    }
-
-    private void OnSwitchWeapon(InputValue value)
-    {
-        
-        if (value.Get() != null)
-        {
-            SwitchWeapon(value.Get<float>() > 0);
-        }
-    }
-
-    private void OnReload()
-    {
-        weapons[ActiveWeaponIndex].SetReload();
     }
 
     private void SwitchWeapon(bool next)

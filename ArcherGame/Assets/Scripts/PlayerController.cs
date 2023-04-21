@@ -15,12 +15,12 @@ public class PlayerController : Damageable
     public override bool CanTakeDmg => current_iTime == 0;
 
     private Vector3 Velocity = Vector3.zero;
-    private bool jump = false;
 
     private PlayerControl pm;
 
     private float LastJump = 0f;
     private float JumpingLandPrevention = .2f;
+    public InputManager InputManager;
     // Start is called before the first frame update
     void Awake()
     {
@@ -35,11 +35,6 @@ public class PlayerController : Damageable
     private void OnDisable()
     {
         pm.PlayerMovement.Disable();
-    }
-
-    public void OnJump()
-    {
-        jump = !jump;
     }
 
     public void CheckGround()
@@ -85,12 +80,17 @@ public class PlayerController : Damageable
         Vector2 mov = pm.PlayerMovement.Movement.ReadValue<Vector2>();
         Vector3 tr = transform.position;
 
-        Velocity = transform.localToWorldMatrix * new Vector3(mov.x, 0, mov.y) * movSpeed + new Vector4(0, Velocity.y, 0);
+        var y = Velocity.y;
+        Velocity = Camera.main.transform.localToWorldMatrix * new Vector3(mov.x, 0, mov.y);
+        Velocity.y = 0;
+        Velocity = Velocity.normalized;
+        Velocity *= movSpeed;
+        Velocity.y = y;
 
         if (IsGrounded)
         {
             Velocity.y = 0;
-            if (jump)
+            if (InputManager.GetJumpInput())
             {
                 Velocity += Vector3.up * 4;
                 IsGrounded = false;

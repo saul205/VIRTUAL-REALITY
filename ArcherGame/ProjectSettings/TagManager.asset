@@ -4,7 +4,6 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - Wall
   - Target
   - Map
   layers:
@@ -14,9 +13,9 @@ TagManager:
   - 
   - Water
   - UI
-  - Hittable
   - Map
-  - Projectile
+  - Target
+  - 
   - 
   - 
   - 
