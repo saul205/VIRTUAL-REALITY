@@ -11,6 +11,7 @@ public class PlayerWeaponManager : MonoBehaviour
     public WeaponController[] weapons;
     public Camera cam;
     public Transform weaponSpawn;
+    public Transform camHolder;
     public Transform aimSpot;
     public int weaponSlots = 2;
 

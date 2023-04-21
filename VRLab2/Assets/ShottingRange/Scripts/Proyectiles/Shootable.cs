@@ -20,7 +20,6 @@ public class Shootable : MonoBehaviour, IShootable
 
     public States state = States.None;
 
-    public int GeneralLayer;
     public Rigidbody Rigidbody;
     public GameObject Owner { get; set; }
 
@@ -54,8 +53,8 @@ public class Shootable : MonoBehaviour, IShootable
     }
 
     public float correctionDistance = 5f;
-    private Vector3 correction;
-    private Vector3 prevPos;
+    protected Vector3 correction;
+    protected Vector3 prevPos;
     // Start is called before the first frame update
 
     public virtual void Shoot(WeaponController controller)
@@ -81,7 +80,7 @@ public class Shootable : MonoBehaviour, IShootable
         switch (state)
         {
             case States.Flying:
-                Fly();
+                
                 if (correction.magnitude > 0.0001)
                 {
                     Vector3 corrToApply = (prevPos - transform.position).magnitude / correctionDistance * correction;
@@ -90,6 +89,7 @@ public class Shootable : MonoBehaviour, IShootable
                     transform.position += corrToApply;
                 }
                 HitScan();
+                Fly();
                 prevPos = transform.position;
                 break;
             case States.Hit:
@@ -110,13 +110,14 @@ public class Shootable : MonoBehaviour, IShootable
 
     public float Radius = .01f;
     public LayerMask hitMask;
-    public void HitScan()
+    public virtual void HitScan()
     {
         RaycastHit closestHit = new RaycastHit();
         Vector3 displacement = transform.position - prevPos;
         if(Physics.SphereCast(prevPos, Radius, displacement.normalized, out closestHit, displacement.magnitude, hitMask))
         {
             Hit(closestHit);
+            state = States.Hit;
         }
     }
 
@@ -126,11 +127,11 @@ public class Shootable : MonoBehaviour, IShootable
         if (damageable != null) {
             damageable.Hit(this.damage);
         }
+
         if (impactImage != null) { 
             var hitImage = Instantiate(impactImage, hit.point + hit.normal * .001f, Quaternion.LookRotation(hit.normal), hit.collider.transform);
             hitImage.transform.localScale = hitImage.transform.worldToLocalMatrix * Vector3.one;
         }
-        state = States.Hit;
 
         ApplyForce(hit);
     }
