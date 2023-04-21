@@ -2377,7 +2377,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1314545803}
-  m_Layer: 7
+  m_Layer: 6
   m_Name: Map
   m_TagString: Map
   m_Icon: {fileID: 0}
@@ -3067,7 +3067,7 @@ GameObject:
   - component: {fileID: 1581737619}
   - component: {fileID: 1581737618}
   - component: {fileID: 1581737617}
-  m_Layer: 7
+  m_Layer: 6
   m_Name: Cube
   m_TagString: Map
   m_Icon: {fileID: 0}
@@ -3796,7 +3796,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ammoTypes:
   - {fileID: 5422214035435194643, guid: 77e635d32989e7943962fd6968128937, type: 3}
-  - {fileID: 2783672852279875024, guid: 1b66effff690f3e438cff2e3b2ad7ddc, type: 3}
+  - {fileID: 5776441505608536902, guid: 1b66effff690f3e438cff2e3b2ad7ddc, type: 3}
   - {fileID: 2783672852279875024, guid: 4894a4a2c7dadc94e89d7a7593bc2547, type: 3}
   ammoMax: 1900000064000000e8030000
 --- !u!1 &1990972161
@@ -3959,7 +3959,7 @@ PrefabInstance:
       objectReference: {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
     - target: {fileID: 1685479402719613066, guid: 941ce66d8ff90e74cba1c5afca38f234, type: 3}
       propertyPath: m_Layer
-      value: 7
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 1685479402737295412, guid: 941ce66d8ff90e74cba1c5afca38f234, type: 3}
       propertyPath: m_RootOrder
@@ -4011,7 +4011,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1685479402737295413, guid: 941ce66d8ff90e74cba1c5afca38f234, type: 3}
       propertyPath: m_Layer
-      value: 7
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 1685479402737295413, guid: 941ce66d8ff90e74cba1c5afca38f234, type: 3}
       propertyPath: m_TagString
@@ -4032,7 +4032,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 254896783837513970, guid: 05efef47b576f9d44b0cf63be383fd3b, type: 3}
       propertyPath: m_Layer
-      value: 7
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 254896783837513970, guid: 05efef47b576f9d44b0cf63be383fd3b, type: 3}
       propertyPath: m_TagString
@@ -4048,7 +4048,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7630128104955914863, guid: 05efef47b576f9d44b0cf63be383fd3b, type: 3}
       propertyPath: m_Layer
-      value: 7
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 7630128104955914863, guid: 05efef47b576f9d44b0cf63be383fd3b, type: 3}
       propertyPath: m_TagString
