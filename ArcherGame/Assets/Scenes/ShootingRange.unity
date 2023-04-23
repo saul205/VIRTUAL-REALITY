@@ -2295,7 +2295,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1289580688}
   - component: {fileID: 1289580687}
-  - component: {fileID: 1289580691}
   - component: {fileID: 1289580692}
   m_Layer: 0
   m_Name: Main Camera
@@ -2365,24 +2364,6 @@ Transform:
   m_Father: {fileID: 2104052000}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1289580691
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1289580685}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5a2a9c34df4095f47b9ca8f975175f5b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Device: 0
-  m_PoseSource: 2
-  m_PoseProviderComponent: {fileID: 0}
-  m_TrackingType: 0
-  m_UpdateType: 0
-  m_UseRelativeTransform: 0
 --- !u!81 &1289580692
 AudioListener:
   m_ObjectHideFlags: 0
@@ -4046,6 +4027,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2104052000}
   - component: {fileID: 2104052001}
+  - component: {fileID: 2104052002}
   m_Layer: 0
   m_Name: CamHolder
   m_TagString: Untagged
@@ -4083,6 +4065,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   camSens: 20
   player: {fileID: 1949638320}
+--- !u!114 &2104052002
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2104051999}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a2a9c34df4095f47b9ca8f975175f5b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Device: 0
+  m_PoseSource: 2
+  m_PoseProviderComponent: {fileID: 0}
+  m_TrackingType: 0
+  m_UpdateType: 0
+  m_UseRelativeTransform: 0
 --- !u!1001 &1685479401965807005
 PrefabInstance:
   m_ObjectHideFlags: 0
