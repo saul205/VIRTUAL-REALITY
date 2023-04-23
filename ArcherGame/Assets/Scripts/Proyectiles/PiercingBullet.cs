@@ -2,13 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem.HID;
-using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class PiercingBullet : Shootable
 {
     public override void HitScan()
     {
-        RaycastHit closestHit = new RaycastHit();
         Vector3 displacement = transform.position - prevPos;
         var hits = Physics.SphereCastAll(prevPos, Radius, displacement.normalized, displacement.magnitude, hitMask);
 

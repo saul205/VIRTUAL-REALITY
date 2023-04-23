@@ -22,7 +22,7 @@ public class WeaponController : MonoBehaviour
     protected bool reload = false;
     protected bool reloading = false;
     protected float reloadTime = 3.5f;
-    protected float reloadStart = 0;
+    protected float reloadStart = 3;
 
     public float recoilValue = 0;
     public float recoilSpeed = 0f;
@@ -147,6 +147,7 @@ public class WeaponController : MonoBehaviour
     {
         if(AmmoCount < MaxAmmo)
         {
+            reloadStart = Time.time;
             reloading = true;
             this.gameObject.GetComponent<Animator>().SetTrigger("reload");
             reloadStart = Time.time;
@@ -166,6 +167,16 @@ public class WeaponController : MonoBehaviour
             AmmoCount += reloadAmount;
         }
 
+        reloading = false;
+        reload = false;
+    }
+
+    public void ResetWeapon()
+    {
+        transform.localEulerAngles = Vector3.zero;
+        targetRotation = Vector3.zero;
+        currentRotation = Vector3.zero;
+        RecoilMult = 0;
         reloading = false;
         reload = false;
     }

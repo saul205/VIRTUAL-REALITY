@@ -11,6 +11,7 @@ public class ItemPickup : MonoBehaviour
     public LayerMask PickMask;
 
     public AmmoManager ammoManager;
+    public InventoryController playerInv;
     // Start is called before the first frame update
     void Start()
     {
@@ -36,6 +37,12 @@ public class ItemPickup : MonoBehaviour
                 }
                 else
                 {
+                    var inv = item.gameObject.GetComponent<Object>();
+                    if(inv != null)
+                    {
+                        playerInv.AddToInventory(inv);
+                    }
+
                     Destroy(item.gameObject.transform.parent.gameObject);
                 }
             }  

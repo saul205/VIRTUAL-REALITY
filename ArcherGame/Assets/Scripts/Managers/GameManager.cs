@@ -9,6 +9,9 @@ public class GameManager : MonoBehaviour
     public List<Target> enemies = new List<Target>();
     public List<Target> targetsPrefabs;
 
+    public Object keyPrefab;
+    public List<Object> keys;
+
     public int startingEnemies = 4;
     public float spawnRate;
     public float lastSpawnTime;
