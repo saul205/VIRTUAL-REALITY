@@ -66,7 +66,7 @@ public class InputManager : MonoBehaviour
         _hold = hold || hold2;
         _press = press || press2;
         _release = release || release2;
-        _cancel = cancel || Input.GetKeyDown(KeyCode.Joystick1Button3);
+        _cancel = cancel || Input.GetKeyDown(KeyCode.Joystick1Button1);
     }
     #endregion
 

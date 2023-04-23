@@ -127,8 +127,14 @@ public class PlayerWeaponManager : MonoBehaviour
     {
         if(ActiveWeaponIndex >= 0 && ActiveWeaponIndex != prevIndex && weapons[ActiveWeaponIndex] != null)
         {
+            
             if(prevIndex >= 0)
+            {
                 weapons[prevIndex].Show(false);
+                weapons[prevIndex].GetComponent<WeaponController>().ResetWeapon();
+            }
+
+            Camera.main.transform.localEulerAngles = Vector3.zero;
             weapons[ActiveWeaponIndex].Show(true);
         }
 
