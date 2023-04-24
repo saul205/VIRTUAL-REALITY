@@ -113,9 +113,9 @@ public class Shootable : MonoBehaviour, IShootable
     {
         RaycastHit closestHit = new RaycastHit();
         Vector3 displacement = transform.position - prevPos;
-        if(Physics.SphereCast(prevPos, Radius, displacement.normalized, out closestHit, displacement.magnitude, hitMask))
+        if (Physics.SphereCast(prevPos, Radius, displacement.normalized, out closestHit, displacement.magnitude, hitMask, QueryTriggerInteraction.Ignore))
         {
-            Hit(closestHit); 
+            Hit(closestHit);
             state = States.Hit;
         }
     }

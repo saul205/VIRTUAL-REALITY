@@ -22,6 +22,10 @@ public class PlayerWeaponManager : MonoBehaviour
 
     public InputManager InputManager;
     public bool AutoReload = true;
+
+
+    public Vector3 targetRotation = Vector3.zero;
+    public Vector3 currentRotation = Vector3.zero;
     void Start()
     {
         weapons = new WeaponController[5];

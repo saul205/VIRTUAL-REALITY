@@ -84,8 +84,8 @@ MonoBehaviour:
   MaxAmmo: 10
   StartingAmmo: 5
   recoilValue: 0
-  recoilSpeed: 0
-  recoverySpeed: 0
+  recoilSpeed: 7
+  recoverySpeed: 2
   RecoilMult: 0
   MinRecoilMult: 0
   MaxRecoilMult: 2

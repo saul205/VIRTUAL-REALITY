@@ -9,6 +9,7 @@ public class ItemPickup : MonoBehaviour
     public float Height = 2;
     public float Radius = 5;
     public LayerMask PickMask;
+    public GameManager GameManager;
 
     public AmmoManager ammoManager;
     public InventoryController playerInv;
@@ -37,13 +38,15 @@ public class ItemPickup : MonoBehaviour
                 }
                 else
                 {
-                    var inv = item.gameObject.GetComponent<Object>();
+                    var inv = item.gameObject.GetComponent<Item>();
                     if(inv != null)
                     {
-                        playerInv.AddToInventory(inv);
+                        if (playerInv.AddToInventory(inv))
+                        {
+                            item.gameObject.SetActive(false);
+                            GameManager.PickKey(item.gameObject);
+                        }
                     }
-
-                    Destroy(item.gameObject.transform.parent.gameObject);
                 }
             }  
         }

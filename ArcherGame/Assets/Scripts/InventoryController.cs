@@ -5,7 +5,8 @@ using UnityEngine;
 public class InventoryController : MonoBehaviour
 {
 
-    List<Object> inventory;
+    public List<Item> inventory;
+    public int MaxInv = 1;
     // Start is called before the first frame update
     void Start()
     {
@@ -18,12 +19,30 @@ public class InventoryController : MonoBehaviour
         
     }
 
-    public void AddToInventory(Object obj)
+    public bool AddToInventory(Item obj)
     {
-        inventory.Add(obj);
+        if(inventory.Count < MaxInv)
+        {
+            inventory.Add(obj);
+            return true;
+        }
+
+        return false;
     }
 
-    public void RemoveFromInventory(Object obj)
+    public Item GetKey()
+    {
+        if(inventory.Count > 0)
+        {
+            var a = inventory[0];
+            inventory.RemoveAt(0);
+            return a;
+        }
+
+        return null;
+    }
+
+    public void RemoveFromInventory(Item obj)
     {
         inventory.Remove(obj);
     }

@@ -31,9 +31,6 @@ public class WeaponController : MonoBehaviour
     public float RecoilMult = 0f;
     public float MinRecoilMult = 0f;
     public float MaxRecoilMult = 2f;
-
-    private Vector3 targetRotation = Vector3.zero;
-    private Vector3 currentRotation = Vector3.zero;
     // Start is called before the first frame update
     void Awake()
     {
@@ -46,9 +43,9 @@ public class WeaponController : MonoBehaviour
         PlayerWeaponManager wepManager = Owner.GetComponent<PlayerWeaponManager>();
         if(wepManager != null)
         {
-            targetRotation = Vector3.Lerp(targetRotation, Vector3.zero, recoverySpeed * Time.deltaTime);
-            currentRotation = Vector3.Slerp(currentRotation, targetRotation, recoilSpeed * Time.deltaTime);
-            wepManager.aimSpot.localEulerAngles = currentRotation;
+            wepManager.targetRotation = Vector3.Lerp(wepManager.targetRotation, Vector3.zero, recoverySpeed * Time.deltaTime);
+            wepManager.currentRotation = Vector3.Slerp(wepManager.currentRotation, wepManager.targetRotation, recoilSpeed * Time.deltaTime);
+            wepManager.aimSpot.localEulerAngles = wepManager.currentRotation;
 
             if (RoF())
             {
@@ -78,7 +75,8 @@ public class WeaponController : MonoBehaviour
 
     public void Recoil()
     {
-        targetRotation = currentRotation + Vector3.left * Mathf.Pow(recoilValue, RecoilMult);
+        PlayerWeaponManager wepManager = Owner.GetComponent<PlayerWeaponManager>();
+        wepManager.targetRotation = wepManager.currentRotation + Vector3.left * Mathf.Pow(recoilValue, RecoilMult);
         RecoilMult = Mathf.Min(RecoilMult + 0.2f, MaxRecoilMult);
     }
 
@@ -174,8 +172,6 @@ public class WeaponController : MonoBehaviour
     public void ResetWeapon()
     {
         transform.localEulerAngles = Vector3.zero;
-        targetRotation = Vector3.zero;
-        currentRotation = Vector3.zero;
         RecoilMult = 0;
         reloading = false;
         reload = false;

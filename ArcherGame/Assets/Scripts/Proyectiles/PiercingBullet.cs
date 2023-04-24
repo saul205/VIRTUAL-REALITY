@@ -8,7 +8,7 @@ public class PiercingBullet : Shootable
     public override void HitScan()
     {
         Vector3 displacement = transform.position - prevPos;
-        var hits = Physics.SphereCastAll(prevPos, Radius, displacement.normalized, displacement.magnitude, hitMask);
+        var hits = Physics.SphereCastAll(prevPos, Radius, displacement.normalized, displacement.magnitude, hitMask, QueryTriggerInteraction.Ignore);
 
         float maxDist = float.PositiveInfinity;
         foreach(var hit in hits)
