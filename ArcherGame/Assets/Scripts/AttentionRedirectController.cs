@@ -46,9 +46,63 @@ public class AttentionRedirectController : MonoBehaviour
         {
             float width = Screen.width;
             float height = Screen.height;
-            Vector3 screenPos = Camera.main.WorldToScreenPoint(key_obj.transform.position);
 
-            
+            /*
+             * 
+             * Rotational computation of the indicator, tested for spherical VR view
+             * 
+             * 
+            Vector3 cam_pos = Camera.main.transform.InverseTransformPoint(key_obj.transform.position);
+            Vector3 cam_rot = Quaternion.LookRotation(cam_pos - Camera.main.transform.localPosition).eulerAngles;
+
+            var vFov = Camera.main.fieldOfView;
+            var hFov = Camera.VerticalToHorizontalFieldOfView(vFov, Camera.main.aspect);
+
+            var x_angle = cam_rot.y;
+            if(x_angle > 180)
+            {
+                x_angle = -360 + x_angle;
+            }
+            x_angle = -x_angle;
+
+            var y_angle = cam_rot.x;
+            if (y_angle > 180)
+            {
+                y_angle = -360 + y_angle;
+            }
+
+            Debug.Log(x_angle + " , " + y_angle);
+
+            if(Mathf.Abs(x_angle) > hFov / 2 || Mathf.Abs(y_angle) > vFov / 2)
+            {
+                if (ind == null)
+                {
+                    ind = Instantiate(indicator, canvas.transform);
+                }
+
+                if (ind != null)
+                {
+                    var x = -(x_angle) / (hFov / 2);
+                    var y = -y_angle / (vFov / 2);
+
+                    //Debug.Log(" X: " + x + " Y: " + y);
+
+                    if (Mathf.Abs(x) > 1)
+                        x = Mathf.Sign(x);
+
+                    if (Mathf.Abs(y) > 1)
+                        y = Mathf.Sign(y);
+
+                    ind.transform.localPosition = new Vector3(x * (width / 5 - ind.GetComponent<Image>().rectTransform.rect.width / 2), y * (height / 2 - ind.GetComponent<Image>().rectTransform.rect.height / 2), 0);
+
+                    Vector3 rotation = new Vector3(0, 0, Vector2.SignedAngle(Vector2.right, new Vector2(x, y)));
+                    ind.transform.localEulerAngles = rotation;
+
+                }
+            }*/
+
+            // Compute from screen information, seems to work in both PC and VR
+            Vector3 screenPos = Camera.main.WorldToScreenPoint(key_obj.transform.position);
             if(screenPos.z < 0 || screenPos.x < 0 || screenPos.x > width || screenPos.y < 0 || screenPos.y > height)
             {
                 if (ind == null)
@@ -79,7 +133,7 @@ public class AttentionRedirectController : MonoBehaviour
                     if (Mathf.Abs(y) > 1)
                         y = Mathf.Sign(y);
 
-                    ind.transform.localPosition = new Vector3(x * (width / 2 - ind.GetComponent<Image>().rectTransform.rect.width / 2), y * (height / 2 - ind.GetComponent<Image>().rectTransform.rect.height / 2), 0);
+                    ind.transform.localPosition = new Vector3(x * (width / 5 - ind.GetComponent<Image>().rectTransform.rect.width / 2), y * (height / 2 - ind.GetComponent<Image>().rectTransform.rect.height / 2), 0);
 
                     Vector3 rotation = new Vector3(0, 0, Vector2.SignedAngle(Vector2.right, new Vector2(x, y)));
                     ind.transform.localEulerAngles = rotation;

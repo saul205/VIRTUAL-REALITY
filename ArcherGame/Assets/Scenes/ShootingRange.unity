@@ -1533,8 +1533,9 @@ MonoBehaviour:
   - {fileID: 954388322}
   correct_key: {fileID: 0}
   startingEnemies: 0
-  spawnRate: 0
+  spawnRate: 0.2
   lastSpawnTime: 0
+  gameOver: 0
   keyFound: 0
   exit: {fileID: 684930029}
 --- !u!1001 &755686439
