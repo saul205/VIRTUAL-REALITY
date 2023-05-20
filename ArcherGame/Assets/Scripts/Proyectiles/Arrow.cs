@@ -44,7 +44,7 @@ public class Arrow : ChargedProjectile, IPickup
 
     public override void Hit(RaycastHit hit)
     {
-        gameObject.transform.SetParent(hit.collider.gameObject.transform);
+        gameObject.transform.SetParent(hit.collider.gameObject.transform, true);
 
         base.Hit(hit);
 
@@ -54,5 +54,11 @@ public class Arrow : ChargedProjectile, IPickup
         transform.position = hit.point;
 
         CanPickup = true;
+
+        var outline = gameObject.AddComponent<Outline>();
+
+        outline.OutlineMode = Outline.Mode.OutlineAndSilhouette;
+        outline.OutlineColor = Color.yellow;
+        outline.OutlineWidth = 5f;
     }
 }

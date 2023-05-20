@@ -17,6 +17,7 @@ public class BowController : ChargedWeaponController
     }
     protected override void HandleShoot()
     {
+        shootSound.Play();
         bullet.transform.SetParent(null);
         bullet.Shoot(this);
 

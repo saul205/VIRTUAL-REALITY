@@ -31,6 +31,8 @@ public class WeaponController : MonoBehaviour
     public float RecoilMult = 0f;
     public float MinRecoilMult = 0f;
     public float MaxRecoilMult = 2f;
+
+    public AudioSource shootSound;
     // Start is called before the first frame update
     void Awake()
     {
@@ -82,6 +84,7 @@ public class WeaponController : MonoBehaviour
 
     protected virtual void HandleShoot()
     {
+        shootSound.Play();
         var bullet = Instantiate(bulletPrefab, bulletSpawn.transform.position, bulletSpawn.transform.rotation);
         bullet.Shoot(this);
 

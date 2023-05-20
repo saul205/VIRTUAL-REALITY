@@ -23,7 +23,20 @@ public class Shootable : MonoBehaviour, IShootable
     public GameObject Owner { get; set; }
 
     public GameObject impactImage;
-    public int damage { get; set; } = 33;
+    
+    public int damage = 34;
+    public int Damage
+    {
+        get
+        {
+            return damage;
+        }
+        set
+        {
+            damage = value;
+        }
+    }
+
     public float speed = 5;
 
     public float Charge = 0;
@@ -37,6 +50,8 @@ public class Shootable : MonoBehaviour, IShootable
             speed = value;
         }
     }
+
+    
 
     public float maxDistance = 100;
     public float MaxDistance
@@ -100,7 +115,7 @@ public class Shootable : MonoBehaviour, IShootable
 
     public virtual void Fly()
     {
-        if(gameObject.transform.localPosition.z > maxDistance)
+        if((gameObject.transform.position - Owner.transform.position).magnitude > maxDistance)
         {
             Destroy(gameObject);
         }
@@ -124,7 +139,7 @@ public class Shootable : MonoBehaviour, IShootable
     {
         IDamageable damageable = hit.collider.GetComponent<IDamageable>();
         if (damageable != null) {
-            damageable.Hit(this.damage);
+            damageable.Hit(this.Damage);
         }
         if (impactImage != null) { 
             var hitImage = Instantiate(impactImage, hit.point + hit.normal * .001f, Quaternion.LookRotation(hit.normal), hit.collider.transform);

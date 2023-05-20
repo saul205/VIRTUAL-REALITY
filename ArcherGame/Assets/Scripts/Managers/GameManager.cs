@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -10,6 +11,9 @@ public class GameManager : MonoBehaviour
     public List<Target> enemies = new List<Target>();
     public List<Target> targetsPrefabs;
 
+    public float spawnArea = 50f;
+    public List<GameObject> spawns;
+
     public Item keyPrefab;
     public List<GameObject> Keys;
     private int key_idx = 0;
@@ -17,7 +21,9 @@ public class GameManager : MonoBehaviour
 
     public int startingEnemies = 4;
     public float spawnRate;
-    public float lastSpawnTime;
+    public int nSpawns = 2;
+    private float lastSpawnTime = -Mathf.Infinity;
+    public int spawnLimit = 50;
 
     public bool gameOver = false;
 
@@ -26,15 +32,10 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        for(int i = 0;  i < startingEnemies; i++)
-        {
-            var randIndex = UnityEngine.Random.Range(0, targetsPrefabs.Count);
-            var randX = UnityEngine.Random.Range(-10, 10);
-            var randY = UnityEngine.Random.Range(-10, 10);
-            var enemy = Instantiate(targetsPrefabs[randIndex], new Vector3(randX, 0, randY), Quaternion.identity);
-            enemy.target = player.gameObject;
-            enemies.Add(enemy);
-        }
+        List<GameObject> availableSpawns = spawns.Where(x => (x.transform.position - player.transform.position).magnitude <= spawnArea).ToList();
+        if (availableSpawns.Any())
+            SpawnEnemies(availableSpawns, startingEnemies);
+
         lastSpawnTime = Time.time;
 
         key_idx = Random.Range(0, Keys.Count);
@@ -48,23 +49,40 @@ public class GameManager : MonoBehaviour
         {
             Application.Quit();
         }
-
-        SpawnEnemies();
+        List<Vector3> pos = spawns.Select(x => x.transform.position).ToList();
+        var a = pos.Select(x => (player.transform.position - x).magnitude).ToList();
+        List<GameObject> availableSpawns = spawns.Where(x => (x.transform.position - player.transform.position).magnitude <= spawnArea).ToList();
+        if(availableSpawns.Any())
+            SpawnEnemies(availableSpawns);
 
         //Remove dead enemies
         enemies.RemoveAll(x => x == null);
     }
 
-    public void SpawnEnemies()
+    public void SpawnEnemies(List<GameObject> availableSpawns, int nEnemies = -1)
     {
-        if (Time.time - lastSpawnTime > 1 / spawnRate)
+        if (nEnemies < 0)
+            nEnemies = nSpawns;
+
+        List<int> spawned = new List<int>();
+        if (Time.time - lastSpawnTime >= 1 / spawnRate && enemies.Count < spawnLimit)
         {
-            var randIndex = UnityEngine.Random.Range(0, targetsPrefabs.Count);
-            var randX = UnityEngine.Random.Range(-10, 10);
-            var randY = UnityEngine.Random.Range(-10, 10);
-            var enemy = Instantiate(targetsPrefabs[randIndex], new Vector3(randX, 0, randY), Quaternion.identity);
-            enemy.target = player.gameObject;
-            enemies.Add(enemy);
+            for(int i = 0; i < nEnemies && i < availableSpawns.Count; i++)
+            {
+                int index = -1;
+                do
+                {
+                    index = Random.Range(0, availableSpawns.Count);
+                } while (spawned.Contains(index));
+
+                spawned.Add(index);
+
+                int randIndex = Random.Range(0, targetsPrefabs.Count);
+
+                var enemy = Instantiate(targetsPrefabs[randIndex], availableSpawns[index].transform.position, Quaternion.identity);
+                enemy.target = player.gameObject;
+                enemies.Add(enemy);
+            }
             lastSpawnTime = Time.time;
         }
     }

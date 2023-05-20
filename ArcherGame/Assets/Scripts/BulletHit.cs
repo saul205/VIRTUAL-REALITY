@@ -13,7 +13,7 @@ public class BulletHit : MonoBehaviour
 
         else if (coll.gameObject.CompareTag("Target"))
         {
-            coll.gameObject.GetComponent<IDamageable>().Hit(gameObject.GetComponent<IShootable>().damage);
+            coll.gameObject.GetComponent<IDamageable>().Hit(gameObject.GetComponent<IShootable>().Damage);
             Destroy(gameObject);
         }
     }

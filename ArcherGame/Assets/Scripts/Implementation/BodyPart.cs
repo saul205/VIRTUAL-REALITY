@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class BodyPart : MonoBehaviour, IBodyPart, IDamageable
 {
+    public AudioSource hitSound;
     public GameObject body;
     public int multiplier = 1;
     public int Multiplier { get
@@ -25,6 +26,7 @@ public class BodyPart : MonoBehaviour, IBodyPart, IDamageable
 
     public void Hit(int dmg)
     {
+        hitSound.Play();
         body.GetComponent<IDamageable>().Hit(dmg * multiplier);
     }
 

@@ -125,7 +125,7 @@ public class AttentionRedirectController : MonoBehaviour
                     var x = (screenPos.x) / (width / 2);
                     var y = screenPos.y / (height / 2);
                     
-                    Debug.Log(screenPos + " X: " + x + " Y: " + y);
+                    //Debug.Log(screenPos + " X: " + x + " Y: " + y);
 
                     if (Mathf.Abs(x) > 1)
                         x = Mathf.Sign(x);

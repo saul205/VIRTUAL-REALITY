@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerController : Damageable
 {
     public float movSpeed = 5f;
+    public float jumpStrength = 10f;
     public float Gravity = 9.82f;
     private bool IsGrounded = true;
     public Transform groundCheck;
@@ -92,7 +93,7 @@ public class PlayerController : Damageable
             Velocity.y = 0;
             if (InputManager.GetJumpInput())
             {
-                Velocity += Vector3.up * 4;
+                Velocity += Vector3.up * jumpStrength;
                 IsGrounded = false;
                 LastJump = Time.time;
             }
