@@ -50,6 +50,8 @@ MonoBehaviour:
   enemies: []
   targetsPrefabs:
   - {fileID: 4611197737563743484, guid: 155602e1db823e94b8e1a3a48efb8187, type: 3}
+  spawnArea: 50
+  spawns: []
   keyPrefab: {fileID: 7862903504501806168, guid: 78df1db2fbc8ec64f949fac0c05bf693, type: 3}
   Keys:
   - {fileID: 0}
@@ -59,8 +61,11 @@ MonoBehaviour:
   correct_key: {fileID: 0}
   startingEnemies: 0
   spawnRate: 0
-  lastSpawnTime: 0
+  nSpawns: 2
+  spawnLimit: 50
   gameOver: 0
+  breakClip: {fileID: 8300000, guid: 8e680000788cccd428e5d22c4aa5c30c, type: 3}
+  openClip: {fileID: 8300000, guid: e5d7d681608761e4ba39bed2c81118a2, type: 3}
   keyFound: 0
   exit: {fileID: 0}
 --- !u!1 &4775356461631840708

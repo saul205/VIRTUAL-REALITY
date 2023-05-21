@@ -418,6 +418,7 @@ MonoBehaviour:
   hp: 100
   MaxHp: 100
   movSpeed: 5
+  jumpStrength: 4
   Gravity: 9.82
   groundCheck: {fileID: 2725505411800363655}
   GroundLayers:
@@ -475,6 +476,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1280
   GameManager: {fileID: 0}
+  pickClip: {fileID: 8300000, guid: 5c6b801d154cb904ca369b7929bd26ab, type: 3}
   ammoManager: {fileID: 2725505411002614706}
   playerInv: {fileID: 2725505411002614704}
 --- !u!114 &2725505411002614706

@@ -11,6 +11,8 @@ public class ItemPickup : MonoBehaviour
     public LayerMask PickMask;
     public GameManager GameManager;
 
+    public AudioClip pickClip;
+
     public AmmoManager ammoManager;
     public InventoryController playerInv;
     // Start is called before the first frame update
@@ -43,6 +45,7 @@ public class ItemPickup : MonoBehaviour
                     {
                         if (playerInv.AddToInventory(inv))
                         {
+                            AudioSource.PlayClipAtPoint(pickClip, transform.position);
                             item.gameObject.SetActive(false);
                             GameManager.PickKey(item.gameObject);
                         }

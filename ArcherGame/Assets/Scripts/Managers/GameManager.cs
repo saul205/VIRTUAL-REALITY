@@ -2,7 +2,9 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEditor.SearchService;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using Random = UnityEngine.Random;
 
 public class GameManager : MonoBehaviour
@@ -26,6 +28,9 @@ public class GameManager : MonoBehaviour
     public int spawnLimit = 50;
 
     public bool gameOver = false;
+    public AudioClip breakClip;
+    public AudioClip openClip;
+    private float openTime = 0;
 
     public bool keyFound = false;
     public GameObject exit;
@@ -39,15 +44,21 @@ public class GameManager : MonoBehaviour
         lastSpawnTime = Time.time;
 
         key_idx = Random.Range(0, Keys.Count);
-        correct_key = Keys[key_idx].GetComponent<Item>();
+        if(Keys.Count > 0)
+            correct_key = Keys[key_idx].GetComponent<Item>();
     }
 
+
+    public bool Tutorial = false;
     // Update is called once per frame
     void Update()
     {
-        if (gameOver || player == null)
+        if (gameOver && Time.time >= openTime + openClip.length)
         {
-            Application.Quit();
+            if (Tutorial)
+                SceneManager.LoadScene("Prueba");
+            else
+                SceneManager.LoadScene("End");
         }
         List<Vector3> pos = spawns.Select(x => x.transform.position).ToList();
         var a = pos.Select(x => (player.transform.position - x).magnitude).ToList();
@@ -102,7 +113,13 @@ public class GameManager : MonoBehaviour
     {
         if(key != null && key == correct_key)
         {
+            AudioSource.PlayClipAtPoint(openClip, player.transform.position);
             gameOver = true;
+            openTime = Time.time;
+        }
+        else if(key != null)
+        {
+            AudioSource.PlayClipAtPoint(breakClip, player.transform.position);
         }
         keyFound = false;
     }

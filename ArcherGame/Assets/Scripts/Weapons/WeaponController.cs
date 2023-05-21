@@ -42,6 +42,9 @@ public class WeaponController : MonoBehaviour
     // Update is called once per frame
     protected virtual void Update()
     {
+        if (Owner == null)
+            return;
+
         PlayerWeaponManager wepManager = Owner.GetComponent<PlayerWeaponManager>();
         if(wepManager != null)
         {
