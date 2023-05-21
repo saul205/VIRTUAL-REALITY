@@ -44,6 +44,7 @@ GameObject:
   - component: {fileID: 3853609348204871322}
   - component: {fileID: 6154583819146604648}
   - component: {fileID: -1744373872604862519}
+  - component: {fileID: 5054718453043769360}
   m_Layer: 9
   m_Name: sniper1
   m_TagString: Untagged
@@ -135,6 +136,7 @@ MonoBehaviour:
   rof: 80
   MaxAmmo: 10
   StartingAmmo: 10
+  reloadTime: 4.5
   recoilValue: 45
   recoilSpeed: 50
   recoverySpeed: 5
@@ -238,3 +240,24 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!95 &5054718453043769360
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3349052189213433679}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 84a3f9c21c2231c47aac98f110055903, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0

@@ -19428,7 +19428,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4775356461522954151, guid: eed786d169e5c3e47a5d93622939ba92, type: 3}
       propertyPath: spawnRate
-      value: 0
+      value: 0.2
       objectReference: {fileID: 0}
     - target: {fileID: 4775356461522954151, guid: eed786d169e5c3e47a5d93622939ba92, type: 3}
       propertyPath: Keys.Array.size
@@ -20817,6 +20817,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1950591095141745001, guid: 2d681dc72175f904f86151466570b1cf, type: 3}
+      propertyPath: m_Layer
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 2725505410879401348, guid: 2d681dc72175f904f86151466570b1cf, type: 3}
       propertyPath: m_BackGroundColor.b
       value: 0.38431373
@@ -20829,6 +20833,14 @@ PrefabInstance:
       propertyPath: gameManager
       value: 
       objectReference: {fileID: 141229510}
+    - target: {fileID: 2725505411002614706, guid: 2d681dc72175f904f86151466570b1cf, type: 3}
+      propertyPath: ammoMax.Array.data[1]
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 2725505411002614706, guid: 2d681dc72175f904f86151466570b1cf, type: 3}
+      propertyPath: ammoMax.Array.data[2]
+      value: 300
+      objectReference: {fileID: 0}
     - target: {fileID: 2725505411002614707, guid: 2d681dc72175f904f86151466570b1cf, type: 3}
       propertyPath: pickClip
       value: 
@@ -20896,6 +20908,14 @@ PrefabInstance:
     - target: {fileID: 2725505411002614717, guid: 2d681dc72175f904f86151466570b1cf, type: 3}
       propertyPath: jumpStrength
       value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 5153731032253992804, guid: 2d681dc72175f904f86151466570b1cf, type: 3}
+      propertyPath: m_Layer
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5984194979205911420, guid: 2d681dc72175f904f86151466570b1cf, type: 3}
+      propertyPath: m_Layer
+      value: 5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2d681dc72175f904f86151466570b1cf, type: 3}

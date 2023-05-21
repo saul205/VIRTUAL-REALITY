@@ -50,7 +50,8 @@ MonoBehaviour:
   prefab: {fileID: 2783672852279875024}
   state: 0
   Rigidbody: {fileID: 6766424210889912625}
-  impactImage: {fileID: 2141373306111429256, guid: b530cb7ef4d220f448daa04d89eceacf, type: 3}
+  impactImage: {fileID: 0}
+  damage: 34
   speed: 300
   Charge: 0
   tail: {fileID: 0}

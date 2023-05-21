@@ -720,20 +720,20 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Use the joystic to move and jump with x
+  m_text: 'Use the joystic to move and jump with B.
 
 
     You have some weapons that
-    can be shot with X.
+    can be shot with Top trigger.
 
-    Use x to switch to the next weapon and Y to reload.
+    Use D to switch to the next weapon and C to
+    reload.
 
-    Some
-    projectiles like the arrows can be recovered.
+    Some projectiles like the arrows can be recovered.
 
 
-    The floating arrows will
-    guide you to your nex objective'
+    The floating
+    arrows will guide you to your next objective.'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}

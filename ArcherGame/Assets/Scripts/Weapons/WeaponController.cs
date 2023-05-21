@@ -21,7 +21,7 @@ public class WeaponController : MonoBehaviour
     protected int AmmoCount;
     protected bool reload = false;
     protected bool reloading = false;
-    protected float reloadTime = 3.5f;
+    [SerializeField] protected float reloadTime = 3.5f;
     protected float reloadStart = 3;
 
     public float recoilValue = 0;

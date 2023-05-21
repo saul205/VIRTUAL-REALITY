@@ -3,6 +3,7 @@ Shader "Supercyan/SupercyanShader"
 	Properties
 	{
 		_Color("Color", Color) = (1,1,1,1)
+		_EmissionColor("EmissionColor", Color) = (1,1,1,1)
 		_MainTex("Albedo (RGB)", 2D) = "white" {}
 	}
 		SubShader
@@ -27,11 +28,14 @@ Shader "Supercyan/SupercyanShader"
 				UNITY_DEFINE_INSTANCED_PROP(fixed4, _Color)
 			UNITY_INSTANCING_BUFFER_END(Props)
 
+			fixed4 _EmissionColor;
+
 			void surf(Input IN, inout SurfaceOutput o)
 			{
 				fixed4 c = tex2D(_MainTex, IN.uv_MainTex) * UNITY_ACCESS_INSTANCED_PROP(Props, _Color);
 				o.Albedo = c.rgb;
 				o.Alpha = c.a;
+				o.Emission = c.rgb * tex2D(_MainTex, IN.uv_MainTex).a * _EmissionColor;
 			}
 			ENDCG
 		}

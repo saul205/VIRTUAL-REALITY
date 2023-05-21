@@ -1,8 +1,6 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEditor.SearchService;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Random = UnityEngine.Random;
@@ -59,6 +57,11 @@ public class GameManager : MonoBehaviour
                 SceneManager.LoadScene("Prueba");
             else
                 SceneManager.LoadScene("End");
+        }
+
+        if(player == null)
+        {
+            Application.Quit();
         }
         List<Vector3> pos = spawns.Select(x => x.transform.position).ToList();
         var a = pos.Select(x => (player.transform.position - x).magnitude).ToList();

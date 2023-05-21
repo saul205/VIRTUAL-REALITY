@@ -58,7 +58,7 @@ public class Arrow : ChargedProjectile, IPickup
         var outline = gameObject.AddComponent<Outline>();
 
         outline.OutlineMode = Outline.Mode.OutlineAndSilhouette;
-        outline.OutlineColor = Color.yellow;
+        outline.OutlineColor = Color.red;
         outline.OutlineWidth = 5f;
     }
 }

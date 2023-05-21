@@ -82,8 +82,9 @@ MonoBehaviour:
   bulletSpawn: {fileID: 6703971296202588668}
   Charge: 0
   rof: 120
-  MaxAmmo: 10
-  StartingAmmo: 5
+  MaxAmmo: 1
+  StartingAmmo: 1
+  reloadTime: 0
   recoilValue: 0
   recoilSpeed: 7
   recoverySpeed: 2
